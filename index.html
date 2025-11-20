@@ -1,1 +1,771 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Toy Story Birthday Adventure!</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;600;700&display=swap');
+        
+        :root {
+            --woody-blue: #003871;
+            --woody-yellow: #FFD700;
+            --buzz-white: #FFFFFF;
+            --buzz-green: #00C853;
+            --buzz-red: #D50000;
+            --andy-wall: #87CEEB;
+            --wood-floor: #8B4513;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', cursive;
+            background: linear-gradient(135deg, var(--andy-wall) 0%, #FFE4B5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .mobile-container {
+            max-width: 428px;
+            margin: 0 auto;
+            background: var(--andy-wall);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.3);
+            border: 8px solid var(--wood-floor);
+        }
+
+        .woody-header {
+            background: linear-gradient(135deg, var(--woody-blue), var(--woody-yellow));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buzz-header {
+            background: linear-gradient(135deg, var(--buzz-white), var(--buzz-green));
+            color: var(--woody-blue);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .floating-toy {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .buzz-fly {
+            animation: fly 4s ease-in-out infinite;
+        }
+
+        @keyframes fly {
+            0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+            25% { transform: translateX(20px) translateY(-10px) rotate(-10deg); }
+            50% { transform: translateX(-10px) translateY(-20px) rotate(10deg); }
+            75% { transform: translateX(15px) translateY(-5px) rotate(-5deg); }
+        }
+
+        .toy-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 3px solid var(--woody-yellow);
+            transition: all 0.3s ease;
+        }
+
+        .toy-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 428px;
+            background: var(--wood-floor);
+            border-top: 4px solid var(--woody-yellow);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .nav-item.active {
+            background: var(--woody-yellow);
+            color: var(--woody-blue);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 215, 0, 0.3);
+        }
+
+        .page {
+            display: none;
+            padding-bottom: 100px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .character-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+            animation: bounce 2s infinite;
+        }
+
+        .woody-badge {
+            background: var(--woody-blue);
+            color: var(--woody-yellow);
+        }
+
+        .buzz-badge {
+            background: var(--buzz-green);
+            color: white;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .pizza-planet {
+            width: 80px;
+            height: 80px;
+            background: var(--buzz-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(213, 0, 0, 0.4);
+        }
+
+        .pizza-planet:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .toy-box {
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px;
+            border: 5px solid #654321;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toy-box::before {
+            content: '🎁';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .claw-machine {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px;
+            text-align: center;
+            position: relative;
+            min-height: 200px;
+        }
+
+        .claw {
+            font-size: 60px;
+            animation: clawMove 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes clawMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(30px); }
+        }
+
+        .andy-writing {
+            font-family: 'Comic Sans MS', cursive;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            transform: rotate(-2deg);
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            margin: 10px;
+        }
+
+        .star-rating {
+            font-size: 30px;
+            color: var(--woody-yellow);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .infinity-button {
+            background: linear-gradient(135deg, var(--buzz-green), var(--buzz-white));
+            color: var(--woody-blue);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,200,83,0.4);
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .infinity-button:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 30px rgba(0,200,83,0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            border: 5px solid var(--woody-yellow);
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .photo-frame {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(var(--rotation));
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .message-bubble {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .message-bubble.woody {
+            background: var(--woody-blue);
+            color: white;
+        }
+
+        .message-bubble.buzz {
+            background: var(--buzz-green);
+            color: white;
+        }
+
+        .message-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            background: inherit;
+            transform: rotate(45deg);
+        }
+
+        .toy-story-font {
+            font-family: 'Bungee', cursive;
+        }
+
+        .countdown-box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px;
+            text-align: center;
+            border: 3px dashed var(--woody-blue);
+        }
+
+        .countdown-number {
+            background: var(--woody-yellow);
+            color: var(--woody-blue);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .alien {
+            font-size: 40px;
+            animation: alienDance 2s ease-in-out infinite;
+        }
+
+        @keyframes alienDance {
+            0%, 100% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(-5px) scale(1.1); }
+            75% { transform: translateX(5px) scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Header -->
+        <header class="woody-header">
+            <div class="floating-toy text-5xl mb-2">🤠</div>
+            <h1 class="toy-story-font text-2xl">HAPPY BIRTHDAY SAYANG!</h1>
+            <p class="text-yellow-200 mt-2">To Infinity and Beyond! 🚀</p>
+            <div class="buzz-fly absolute top-4 right-4 text-4xl">🚀</div>
+        </header>
+
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="p-4">
+                <div class="text-center mt-6">
+                    <div class="text-6xl mb-4 floating-toy">🎂</div>
+                    <h2 class="text-3xl font-bold text-blue-900 toy-story-font">PARTY TIME!</h2>
+                    <div class="mt-4">
+                        <span class="character-badge woody-badge">Age: 19</span>
+                        <span class="character-badge buzz-badge">Level: AWESOME!</span>
+                    </div>
+                </div>
+
+                <div class="toy-card">
+                    <h3 class="text-xl font-bold text-blue-900 mb-3">
+                        <span class="alien">👽</span> Message from Andy's Room
+                    </h3>
+                    <div class="andy-writing">
+                        "Happy Birthday Sayang! semoga aku selalu menjadi alasan senyumu bukan lukamu hehe 🎈"
+                    </div>
+                    <div class="star-rating text-center mt-3">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+                </div>
+
+                <div class="countdown-box">
+                    <h3 class="text-lg font-bold text-blue-900 mb-4">🎮 Birthday Countdown</h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div>
+                            <div class="countdown-number" id="days">00</div>
+                            <div class="text-xs text-gray-600">Days</div>
+                        </div>
+                        <div>
+                            <div class="countdown-number" id="hours">00</div>
+                            <div class="text-xs text-gray-600">Hours</div>
+                        </div>
+                        <div>
+                            <div class="countdown-number" id="minutes">00</div>
+                            <div class="text-xs text-gray-600">Minutes</div>
+                        </div>
+                        <div>
+                            <div class="countdown-number" id="seconds">00</div>
+                            <div class="text-xs text-gray-600">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6">
+                    <div class="pizza-planet" onclick="openPizzaPlanet()">🍕</div>
+                    <p class="text-blue-900 font-bold">Click for Pizza Planet Surprise!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toys Page -->
+        <div id="toys" class="page">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold text-blue-900 text-center mb-4 toy-story-font">
+                    🧸 Andy's Toy Collection
+                </h2>
+                
+                <div class="toy-box">
+                    <h3 class="text-xl font-bold text-yellow-300 mb-3">Featured Toys</h3>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="floating-toy">
+                            <div class="text-4xl">🤠</div>
+                            <p class="text-white text-sm">Woody</p>
+                        </div>
+                        <div class="buzz-fly">
+                            <div class="text-4xl">🚀</div>
+                            <p class="text-white text-sm">Buzz</p>
+                        </div>
+                        <div class="floating-toy" style="animation-delay: 1s;">
+                            <div class="text-4xl">🐴</div>
+                            <p class="text-white text-sm">Bullseye</p>
+                        </div>
+                        <div class="floating-toy" style="animation-delay: 0.5s;">
+                            <div class="text-4xl">🐷</div>
+                            <p class="text-white text-sm">Hamm</p>
+                        </div>
+                        <div class="floating-toy" style="animation-delay: 1.5s;">
+                            <div class="text-4xl">🦖</div>
+                            <p class="text-white text-sm">Rex</p>
+                        </div>
+                        <div class="alien">
+                            <div class="text-4xl">👽</div>
+                            <p class="text-white text-sm">Aliens</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="claw-machine">
+                    <h3 class="text-lg font-bold text-blue-900 mb-3">The Claw! 🦎</h3>
+                    <div class="claw" onclick="playClaw()">🎯</div>
+                    <p class="text-gray-600 mt-3">Click the claw to win a prize!</p>
+                    <div id="prize" class="mt-4 text-4xl"></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="infinity-button" onclick="goToInfinity()">
+                        To Infinity and Beyond! 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Page -->
+        <div id="gallery" class="page">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold text-blue-900 text-center mb-4 toy-story-font">
+                    📸 Memory Photos
+                </h2>
+                <div class="photo-grid">
+                    <div class="photo-frame" style="--rotation: -3deg;">
+                        <img src="pacar beneran.jpg" alt="Memory 1">
+                    </div>
+                    <div class="photo-frame" style="--rotation: 2deg;">
+                        <img src="pcr bnhr2.jpg" alt="Memory 2">
+                    </div>
+                    <div class="photo-frame" style="--rotation: -2deg;">
+                        <img src="pcr bnr3.jpg" alt="Memory 3">
+                    </div>
+                    <div class="photo-frame" style="--rotation: 3deg;">
+                        <img src="pcr bnr.jpg" alt="Memory 4">
+                    </div>
+                    <div class="photo-frame" style="--rotation: -1deg;">
+                        <img src="pcr bnr4.jpg" alt="Memory 5">
+                    </div>
+                    <div class="photo-frame" style="--rotation: 1deg;">
+                        <img src="pcr bnr5.jpg" alt="Memory 6">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Page -->
+        <div id="messages" class="page">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold text-blue-900 text-center mb-4 toy-story-font">
+                    💌 Birthday Messages
+                </h2>
+                
+                <div id="messagesList">
+                    <div class="message-bubble woody">
+                        <div class="flex items-center mb-2">
+                            <span class="text-2xl mr-2">🤠</span>
+                            <span class="font-bold">Woody</span>
+                        </div>
+                        <p>"Howdy partner! Happy Birthday! You're the rootinest, tootinest birthday person I know! Yee-haw!"</p>
+                    </div>
+                    
+                    <div class="message-bubble buzz">
+                        <div class="flex items-center mb-2">
+                            <span class="text-2xl mr-2">🚀</span>
+                            <span class="font-bold">Buzz Lightyear</span>
+                        </div>
+                        <p>"To infinity and beyond! Your mission today is to have the best birthday ever! Mission accomplished!"</p>
+                    </div>
+
+                    <div class="message-bubble" style="background: #90EE90;">
+                        <div class="flex items-center mb-2">
+                            <span class="text-2xl mr-2">👽</span>
+                            <span class="font-bold">The Aliens</span>
+                        </div>
+                        <p>"Ooooooh! The claw! Birthday wishes are our favorite! Happy birthday!"</p>
+                    </div>
+                </div>
+
+                <div class="toy-card mt-4">
+                    <h3 class="text-lg font-bold text-blue-900 mb-3">Leave a Message</h3>
+                    <input type="text" id="nameInput" class="w-full p-3 border-2 border-yellow-400 rounded-lg mb-2" placeholder="Your name">
+                    <textarea id="messageInput" class="w-full p-3 border-2 border-yellow-400 rounded-lg" rows="3" placeholder="Your birthday message..."></textarea>
+                    <button class="infinity-button w-full mt-3" onclick="addMessage()">
+                        Send Message 🎈
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="showPage('home')">
+                <i class="fas fa-home text-xl"></i>
+                <div class="text-xs mt-1">Home</div>
+            </div>
+            <div class="nav-item" onclick="showPage('toys')">
+                <i class="fas fa-gamepad text-xl"></i>
+                <div class="text-xs mt-1">Toys</div>
+            </div>
+            <div class="nav-item" onclick="showPage('gallery')">
+                <i class="fas fa-images text-xl"></i>
+                <div class="text-xs mt-1">Gallery</div>
+            </div>
+            <div class="nav-item" onclick="showPage('messages')">
+                <i class="fas fa-envelope text-xl"></i>
+                <div class="text-xs mt-1">Messages</div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Pizza Planet Modal -->
+    <div id="pizzaModal" class="modal">
+        <div class="modal-content">
+            <div class="text-6xl mb-4">🍕</div>
+            <h2 class="text-2xl font-bold text-blue-900 toy-story-font mb-3">PIZZA PLANET!</h2>
+            <p class="text-gray-700 mb-4">
+                You've won a free pizza party! 🎉<br>
+                Use code: TOYSTORY2024
+            </p>
+            <button class="infinity-button" onclick="closePizzaPlanet()">
+                Yee-haw! Thanks! 🤠
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        // Pizza Planet Modal
+        function openPizzaPlanet() {
+            document.getElementById('pizzaModal').classList.add('active');
+            createConfetti();
+        }
+
+        function closePizzaPlanet() {
+            document.getElementById('pizzaModal').classList.remove('active');
+        }
+
+        // Claw Machine Game
+        function playClaw() {
+            const prizes = ['🧸', '🚀', '🎈', '🎁', '🍕', '⭐', '🎯', '🏆'];
+            const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            document.getElementById('prize').innerHTML = randomPrize;
+            
+            // Animation
+            const claw = document.querySelector('.claw');
+            claw.style.animation = 'none';
+            setTimeout(() => {
+                claw.style.animation = 'clawMove 3s ease-in-out infinite';
+            }, 100);
+        }
+
+        // Add Message
+        function addMessage() {
+            const name = document.getElementById('nameInput').value;
+            const message = document.getElementById('messageInput').value;
+            
+            if (name && message) {
+                const messagesList = document.getElementById('messagesList');
+                const newMessage = document.createElement('div');
+                const colors = ['woody', 'buzz', ''];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const icons = ['🎈', '🎉', '🎊', '🎁', '🌟'];
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                
+                newMessage.className = `message-bubble ${randomColor} slide-up`;
+                newMessage.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">${randomIcon}</span>
+                        <span class="font-bold">${name}</span>
+                    </div>
+                    <p>${message}</p>
+                `;
+                messagesList.insertBefore(newMessage, messagesList.firstChild);
+                
+                document.getElementById('nameInput').value = '';
+                document.getElementById('messageInput').value = '';
+            }
+        }
+
+        // Go to Infinity
+        function goToInfinity() {
+            document.body.style.animation = 'spin 1s ease-in-out';
+            setTimeout(() => {
+                document.body.style.animation = '';
+                alert('🚀 Welcome to Infinity! You are now officially awesome!');
+            }, 1000);
+        }
+
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const birthday = new Date();
+            birthday.setMonth(birthday.getMonth());
+            birthday.setDate(birthday.getDate() + 7); // Set to 7 days from now
+            
+            const diff = birthday - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Confetti Effect
+        function createConfetti() {
+            const colors = ['#FFD700', '#003871', '#00C853', '#D50000', '#FFFFFF'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.zIndex = '9999';
+                    confetti.style.animation = 'fall 3s linear';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        // Add falling animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize with some confetti
+        setTimeout(() => createConfetti(), 1000);
+    </script>
+</body>
+</html>
